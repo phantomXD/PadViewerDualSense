@@ -1,0 +1,597 @@
+/*
+ * DualSense OBS 오버레이 — 가독성 정리본
+ *
+ * OBS URL:
+ * https://overlay.gamepadviewer.com/loader/index.html?p=1&s=8
+ * 브라우저 소스 크기: 900 × 730
+ *
+ * [수정할 곳]
+ * 아래 1번 구역의 이미지 주소 9개만 바꾸면 됩니다.
+ * 상대경로는 온라인 GPV 페이지 기준이며 PC 폴더 기준이 아닙니다.
+ * 온라인 페이지에서는 file:/// 로컬 이미지 접근이 차단될 수 있습니다.
+ *
+ * [!important 안내]
+ * 해당 속성을 일반 CSS 선언보다 우선하도록 표시합니다.
+ * 이 스킨은 GPV의 기존 크기·위치·이미지 규칙을 덮어씁니다.
+ * 양쪽 모두 !important이면 선택자 우선순위 등을 다시 비교합니다.
+ * 스틱의 margin/transform과 트리거의 opacity는 GPV 입력 처리를 위해
+ * 이 파일에서 강제 고정하지 않았습니다.
+ *
+ * 원본의 선택자·속성·값·순서를 유지한 서식 정리본입니다.
+ * !important를 일괄 삭제하면 배치나 입력 반응이 달라질 수 있습니다.
+ */
+
+/* 1. 이미지 경로 — 이 구역에서 주소를 수정하세요. */
+:root {
+    --base-image: url("https://raw.githubusercontent.com/phantomXD/PadViewerATArkveld/main/base.png");
+    --triggers-image: url("https://raw.githubusercontent.com/phantomXD/PadViewerATArkveld/main/triggers.png");
+    --bumpers-image: url("https://raw.githubusercontent.com/phantomXD/PadViewerATArkveld/main/bumpers.png");
+    --touchpad-image: url("https://raw.githubusercontent.com/phantomXD/PadViewerATArkveld/main/touchpad.png");
+    --start-image: url("https://raw.githubusercontent.com/phantomXD/PadViewerATArkveld/main/start.png");
+    --face-image: url("https://raw.githubusercontent.com/phantomXD/PadViewerATArkveld/main/face.png");
+    --sticks-image: url("https://raw.githubusercontent.com/phantomXD/PadViewerATArkveld/main/sticks.png");
+    --dpad-image: url("https://raw.githubusercontent.com/phantomXD/PadViewerATArkveld/main/dpad.png");
+    --ps-image: url("https://raw.githubusercontent.com/phantomXD/PadViewerATArkveld/main/ps.png");
+}
+
+/* 2. 페이지와 본체의 기본 배치 */
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    background: transparent !important;
+}
+
+.template {
+    display: none !important;
+}
+
+#gamepads {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 900px !important;
+    height: 730px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.controller {
+    display: none !important;
+}
+
+.controller.ds4.active {
+    display: block !important;
+}
+
+.controller.ds4 {
+    width: 1800px !important;
+    height: 1460px !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    margin: 0 !important;
+    transform: scale(.5) !important;
+    transform-origin: 0 0 !important;
+    background-repeat: no-repeat !important;
+    background-size: 1800px 1460px !important;
+    background-position: 0 0 !important;
+}
+
+.controller.ds4,
+.controller.ds4.white,
+.controller.ds4.disconnected {
+    background-image: var(--base-image) !important;
+}
+
+/* 3. GPV 기본 컨테이너를 새 디자인 크기에 맞춤 */
+.controller.ds4 :is(.triggers,.bumpers,.arrows,.abxy,.sticks,.dpad) {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 1800px !important;
+    height: 1460px !important;
+    transform: none !important;
+    background: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    pointer-events: none;
+}
+
+.controller.ds4 :is(.quadrant,.wheels,.fstick,.trigger-button,.clear) {
+    display: none !important;
+}
+
+.controller.ds4.disconnected :is(.triggers,.bumpers,.arrows,.abxy,.sticks,.dpad,.touchpad,.meta) {
+    display: block !important;
+}
+
+.controller.ds4.disconnected :is(.quadrant,.wheels,.fstick,.trigger-button,.clear) {
+    display: none !important;
+}
+
+/* L2 — 눌림 그림은 고정하고 GPV가 opacity로 입력량을 표시합니다. */
+.controller.ds4 .trigger.left {
+    position: absolute !important;
+    display: block !important;
+    left: 242px !important;
+    top: 46px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 230px !important;
+    height: 217px !important;
+    float: none !important;
+    background-image: var(--triggers-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 460px 434px !important;
+    background-position: 0px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+}
+
+/* 트리거는 .pressed 대신 GPV의 opacity 값으로 반응합니다. */
+.controller.ds4 .trigger.left {
+    background-position: 0px -217px !important;
+}
+
+/* R2 — 눌림 그림은 고정하고 GPV가 opacity로 입력량을 표시합니다. */
+.controller.ds4 .trigger.right {
+    position: absolute !important;
+    display: block !important;
+    left: 1328px !important;
+    top: 46px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 230px !important;
+    height: 217px !important;
+    float: none !important;
+    background-image: var(--triggers-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 460px 434px !important;
+    background-position: -230px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+}
+
+/* 트리거는 .pressed 대신 GPV의 opacity 값으로 반응합니다. */
+.controller.ds4 .trigger.right {
+    background-position: -230px -217px !important;
+}
+
+/* L1 */
+.controller.ds4 .bumper.left {
+    position: absolute !important;
+    display: block !important;
+    left: 245px !important;
+    top: 289px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 229px !important;
+    height: 72px !important;
+    float: none !important;
+    background-image: var(--bumpers-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 458px 144px !important;
+    background-position: 0px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .bumper.left.pressed {
+    background-position: 0px -72px !important;
+}
+
+/* R1 */
+.controller.ds4 .bumper.right {
+    position: absolute !important;
+    display: block !important;
+    left: 1326px !important;
+    top: 289px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 229px !important;
+    height: 72px !important;
+    float: none !important;
+    background-image: var(--bumpers-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 458px 144px !important;
+    background-position: -229px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .bumper.right.pressed {
+    background-position: -229px -72px !important;
+}
+
+/* 터치패드 */
+.controller.ds4 .touchpad {
+    position: absolute !important;
+    display: block !important;
+    left: 538px !important;
+    top: 318px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 724px !important;
+    height: 352px !important;
+    float: none !important;
+    background-image: var(--touchpad-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 724px 704px !important;
+    background-position: 0px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .touchpad.pressed {
+    background-position: 0px -352px !important;
+}
+
+/* Create 버튼 */
+.controller.ds4 .back {
+    position: absolute !important;
+    display: block !important;
+    left: 457px !important;
+    top: 328px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 58px !important;
+    height: 131px !important;
+    float: none !important;
+    background-image: var(--start-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 116px 262px !important;
+    background-position: 0px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .back.pressed {
+    background-position: 0px -131px !important;
+}
+
+/* Options 버튼 */
+.controller.ds4 .start {
+    position: absolute !important;
+    display: block !important;
+    left: 1285px !important;
+    top: 334px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 58px !important;
+    height: 125px !important;
+    float: none !important;
+    background-image: var(--start-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 116px 262px !important;
+    background-position: -58px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .start.pressed {
+    background-position: -58px -131px !important;
+}
+
+/* × 버튼 — GPV 클래스 a */
+.controller.ds4 .button.a {
+    position: absolute !important;
+    display: block !important;
+    left: 1386px !important;
+    top: 675px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 129px !important;
+    height: 129px !important;
+    float: none !important;
+    background-image: var(--face-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 516px 258px !important;
+    background-position: 0px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .button.a.pressed {
+    background-position: 0px -129px !important;
+}
+
+/* ○ 버튼 — GPV 클래스 b */
+.controller.ds4 .button.b {
+    position: absolute !important;
+    display: block !important;
+    left: 1515px !important;
+    top: 546px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 129px !important;
+    height: 129px !important;
+    float: none !important;
+    background-image: var(--face-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 516px 258px !important;
+    background-position: -129px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .button.b.pressed {
+    background-position: -129px -129px !important;
+}
+
+/* □ 버튼 — GPV 클래스 x */
+.controller.ds4 .button.x {
+    position: absolute !important;
+    display: block !important;
+    left: 1257px !important;
+    top: 546px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 129px !important;
+    height: 129px !important;
+    float: none !important;
+    background-image: var(--face-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 516px 258px !important;
+    background-position: -258px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .button.x.pressed {
+    background-position: -258px -129px !important;
+}
+
+/* △ 버튼 — GPV 클래스 y */
+.controller.ds4 .button.y {
+    position: absolute !important;
+    display: block !important;
+    left: 1386px !important;
+    top: 417px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 129px !important;
+    height: 129px !important;
+    float: none !important;
+    background-image: var(--face-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 516px 258px !important;
+    background-position: -387px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .button.y.pressed {
+    background-position: -387px -129px !important;
+}
+
+/* 왼쪽 스틱 / L3 */
+.controller.ds4 .stick.left {
+    position: absolute !important;
+    display: block !important;
+    left: 508px !important;
+    top: 739px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 220px !important;
+    height: 220px !important;
+    float: none !important;
+    background-image: var(--sticks-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 440px 440px !important;
+    background-position: 0px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .stick.left.pressed {
+    background-position: 0px -220px !important;
+}
+
+/* 오른쪽 스틱 / R3 */
+.controller.ds4 .stick.right {
+    position: absolute !important;
+    display: block !important;
+    left: 1072px !important;
+    top: 739px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 220px !important;
+    height: 220px !important;
+    float: none !important;
+    background-image: var(--sticks-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 440px 440px !important;
+    background-position: -220px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .stick.right.pressed {
+    background-position: -220px -220px !important;
+}
+
+/* 십자키 위 */
+.controller.ds4 .face.up {
+    position: absolute !important;
+    display: block !important;
+    left: 295px !important;
+    top: 458px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 107px !important;
+    height: 130px !important;
+    float: none !important;
+    background-image: var(--dpad-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 520px 260px !important;
+    background-position: 0px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .face.up.pressed {
+    background-position: 0px -130px !important;
+}
+
+/* 십자키 아래 */
+.controller.ds4 .face.down {
+    position: absolute !important;
+    display: block !important;
+    left: 297px !important;
+    top: 638px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 107px !important;
+    height: 129px !important;
+    float: none !important;
+    background-image: var(--dpad-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 520px 260px !important;
+    background-position: -130px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .face.down.pressed {
+    background-position: -130px -130px !important;
+}
+
+/* 십자키 왼쪽 */
+.controller.ds4 .face.left {
+    position: absolute !important;
+    display: block !important;
+    left: 195px !important;
+    top: 560px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 130px !important;
+    height: 108px !important;
+    float: none !important;
+    background-image: var(--dpad-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 520px 260px !important;
+    background-position: -260px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .face.left.pressed {
+    background-position: -260px -130px !important;
+}
+
+/* 십자키 오른쪽 */
+.controller.ds4 .face.right {
+    position: absolute !important;
+    display: block !important;
+    left: 374px !important;
+    top: 558px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 130px !important;
+    height: 107px !important;
+    float: none !important;
+    background-image: var(--dpad-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 520px 260px !important;
+    background-position: -390px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .face.right.pressed {
+    background-position: -390px -130px !important;
+}
+
+/* PS 버튼 */
+.controller.ds4 .meta {
+    position: absolute !important;
+    display: block !important;
+    left: 830px !important;
+    top: 787px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 131px !important;
+    height: 108px !important;
+    float: none !important;
+    background-image: var(--ps-image) !important;
+    background-repeat: no-repeat !important;
+    background-size: 131px 216px !important;
+    background-position: 0px 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* 눌림 상태: 스프라이트 이미지의 아래쪽 줄 표시 */
+.controller.ds4 .meta.pressed {
+    background-position: 0px -108px !important;
+}
+
