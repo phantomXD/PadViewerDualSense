@@ -1,0 +1,92 @@
+[
+  {
+    "file": "triggers.psd",
+    "size": [
+      460,
+      434
+    ],
+    "max_channel_error": 1,
+    "pixels_with_error": 8860,
+    "pixel_layers": 14
+  },
+  {
+    "file": "bumpers.psd",
+    "size": [
+      458,
+      144
+    ],
+    "max_channel_error": 1,
+    "pixels_with_error": 4804,
+    "pixel_layers": 12
+  },
+  {
+    "file": "touchpad.psd",
+    "size": [
+      724,
+      704
+    ],
+    "max_channel_error": 1,
+    "pixels_with_error": 18238,
+    "pixel_layers": 6
+  },
+  {
+    "file": "start.psd",
+    "size": [
+      116,
+      262
+    ],
+    "max_channel_error": 1,
+    "pixels_with_error": 1355,
+    "pixel_layers": 12
+  },
+  {
+    "file": "face.psd",
+    "size": [
+      516,
+      258
+    ],
+    "max_channel_error": 1,
+    "pixels_with_error": 14690,
+    "pixel_layers": 28
+  },
+  {
+    "file": "sticks.psd",
+    "size": [
+      440,
+      440
+    ],
+    "max_channel_error": 1,
+    "pixels_with_error": 5889,
+    "pixel_layers": 10
+  },
+  {
+    "file": "dpad.psd",
+    "size": [
+      520,
+      260
+    ],
+    "max_channel_error": 1,
+    "pixels_with_error": 6364,
+    "pixel_layers": 24
+  },
+  {
+    "file": "ps.psd",
+    "size": [
+      131,
+      216
+    ],
+    "max_channel_error": 1,
+    "pixels_with_error": 396,
+    "pixel_layers": 3
+  },
+  {
+    "file": "base.psd",
+    "size": [
+      1800,
+      1460
+    ],
+    "max_channel_error": 1,
+    "pixels_with_error": 658135,
+    "pixel_layers": 20
+  }
+]
